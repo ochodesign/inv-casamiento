@@ -1,4 +1,5 @@
 import React from "react";
+import { Typewriter } from 'react-simple-typewriter';
 
 import Header from "./components/Header";
 import ContactForm from "./components/ContactForm";
@@ -11,11 +12,48 @@ function App() {
     <div className="font-sans bg-gray-100 min-h-screen">
       <Header />
 
-      {/* Hero Section */}
-      <FadeInSection id="inicio" className="pt-24 min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-gray-700 text-center px-4 text-white">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4">Bienvenido a tu One Page</h1>
-        <p className="text-lg md:text-2xl mb-8 text-gray-200">Sitio profesional, moderno y responsivo</p>
-        <a href="#contacto" className="px-6 py-3 bg-white text-gray-900 rounded-lg shadow hover:bg-gray-200 transition font-semibold">Contáctame</a>
+      {/* Hero Section tipo Showcase */}
+      <FadeInSection id="inicio" className="pt-24 min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-gray-700 px-4 text-white">
+        <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-between gap-8">
+          {/* Izquierda: Texto animado */}
+          <div className="flex-1 flex flex-col items-start md:items-start text-left mb-10 md:mb-0">
+            <h1 className="text-4xl md:text-6xl font-bold mb-4">
+              <span className="block">Bienvenido a tu</span>
+              <span className="text-blue-400">
+                <Typewriter
+                  words={["One Page", "Landing Page", "Sitio Profesional", "Portfolio Moderno"]}
+                  loop={0}
+                  cursor
+                  cursorStyle="_"
+                  typeSpeed={70}
+                  deleteSpeed={50}
+                  delaySpeed={1200}
+                />
+              </span>
+            </h1>
+            <p className="text-lg md:text-2xl mb-8 text-gray-200 max-w-md">Sitio profesional, moderno y responsivo, pensado para destacar tu marca o servicio.</p>
+            <a href="#contacto" className="px-6 py-3 bg-white text-gray-900 rounded-lg shadow hover:bg-gray-200 transition font-semibold">Contáctame</a>
+          </div>
+          {/* Derecha: Grid animado de servicios */}
+          <div className="flex-1 grid grid-cols-2 gap-4 animate-fade-in-up">
+            <div className="bg-white/10 rounded-xl p-6 flex flex-col items-center shadow-lg border border-white/20 hover:scale-105 transition-transform">
+              <svg className="w-10 h-10 mb-2 text-blue-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+              <span className="font-semibold">Diseño Web</span>
+            </div>
+            <div className="bg-white/10 rounded-xl p-6 flex flex-col items-center shadow-lg border border-white/20 hover:scale-105 transition-transform">
+              <svg className="w-10 h-10 mb-2 text-pink-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+              <span className="font-semibold">Landing Pages</span>
+            </div>
+            <div className="bg-white/10 rounded-xl p-6 flex flex-col items-center shadow-lg border border-white/20 hover:scale-105 transition-transform">
+              <svg className="w-10 h-10 mb-2 text-green-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16"/></svg>
+              <span className="font-semibold">Soporte</span>
+            </div>
+            <div className="bg-white/10 rounded-xl p-6 flex flex-col items-center shadow-lg border border-white/20 hover:scale-105 transition-transform">
+              <svg className="w-10 h-10 mb-2 text-yellow-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              <span className="font-semibold">Optimización</span>
+            </div>
+          </div>
+        </div>
       </FadeInSection>
 
       {/* Sobre mí Section */}
