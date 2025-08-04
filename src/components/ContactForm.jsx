@@ -3,6 +3,7 @@ import React, { useState } from "react";
 function ContactForm() {
   const [form, setForm] = useState({ nombre: "", email: "", telefono: "", mensaje: "" });
   const [status, setStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -11,6 +12,7 @@ function ContactForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus(null);
+    setLoading(true);
     try {
       const res = await fetch("/backend/contact.php", {
         method: "POST",
@@ -18,9 +20,16 @@ function ContactForm() {
         body: new URLSearchParams(form).toString(),
       });
       const data = await res.json();
-      setStatus(data.message);
+      if (data.success) {
+        setStatus({ type: "success", text: data.message });
+        setForm({ nombre: "", email: "", telefono: "", mensaje: "" });
+      } else {
+        setStatus({ type: "error", text: data.message || "Error al enviar el mensaje." });
+      }
     } catch {
-      setStatus("Error al enviar el mensaje.");
+      setStatus({ type: "error", text: "Error al enviar el mensaje." });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -29,14 +38,15 @@ function ContactForm() {
       <h2 className="text-3xl font-bold mb-2 text-gray-800 text-center">Contacto</h2>
       <p className="mb-6 text-gray-500 text-center">¿Listo para tu próximo proyecto? ¡Escríbeme o contáctame por redes!</p>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex gap-4 flex-col md:flex-row">
-          <input name="nombre" value={form.nombre} onChange={handleChange} placeholder="Nombre" className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
-          <input name="email" value={form.email} onChange={handleChange} placeholder="Email" type="email" className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
-        </div>
+          <input name="nombre" value={form.nombre} onChange={handleChange} placeholder="Nombre" className="flex-1 w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+          <input name="email" value={form.email} onChange={handleChange} placeholder="Email" type="email" className="flex-1 w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+       
         <input name="telefono" value={form.telefono} onChange={handleChange} placeholder="Teléfono (opcional)" type="tel" className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
         <textarea name="mensaje" value={form.mensaje} onChange={handleChange} placeholder="Mensaje" className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none min-h-[120px]" required />
-        <button type="submit" className="w-full bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition">Enviar mensaje</button>
-        {status && <p className="mt-2 text-center text-blue-700 font-medium">{status}</p>}
+        <button type="submit" disabled={loading} className={`w-full bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition ${loading ? 'opacity-60 cursor-not-allowed' : 'hover:bg-blue-800'}`}>{loading ? 'Enviando...' : 'Enviar mensaje'}</button>
+        {status && (
+          <p className={`mt-2 text-center font-medium ${status.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>{status.text}</p>
+        )}
       </form>
       <div className="mt-8 flex flex-col items-center gap-2">
         <span className="text-gray-500">O contáctame en:</span>
