@@ -12,14 +12,14 @@ function App() {
       <Header />
 
       {/* Hero Section */}
-      <FadeInSection id="hero" className="pt-24 min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-gray-700 text-center px-4 text-white">
+      <FadeInSection id="inicio" className="pt-24 min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-gray-700 text-center px-4 text-white">
         <h1 className="text-4xl md:text-6xl font-bold mb-4">Bienvenido a tu One Page</h1>
         <p className="text-lg md:text-2xl mb-8 text-gray-200">Sitio profesional, moderno y responsivo</p>
         <a href="#contacto" className="px-6 py-3 bg-white text-gray-900 rounded-lg shadow hover:bg-gray-200 transition font-semibold">Contáctame</a>
       </FadeInSection>
 
       {/* Sobre mí Section */}
-      <FadeInSection id="sobre-mi" className="py-16 bg-gray-200">
+      <FadeInSection id="sobremi" className="py-16 bg-gray-200">
         <div className="container mx-auto px-4 max-w-3xl flex flex-col md:flex-row items-center gap-8">
           <img src="/logo192.png" alt="Foto Lucas Ochoa" className="w-32 h-32 rounded-full shadow-lg mx-auto md:mx-0" />
           <div>
