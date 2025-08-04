@@ -133,6 +133,11 @@ function App() {
         </div>
       </SlideUpSection>
 
+      {/* Contadores animados de logros */}
+      <React.Suspense fallback={null}>
+        {React.createElement(require("./components/ContadoresLogros.jsx").default)}
+      </React.Suspense>
+
       {/* Contacto Section angosta y vertical */}
       <FadeInSection id="contacto" className="py-16 bg-gradient-to-t from-gray-700 to-gray-100">
         <div className="container mx-auto px-4 flex justify-center">
