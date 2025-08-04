@@ -75,13 +75,26 @@ function Header() {
         </nav>
         {/* Burger menu */}
         <button
-          className="md:hidden flex flex-col justify-center items-center w-10 h-10 group"
+          className="md:hidden flex flex-col justify-center items-center w-10 h-10 group relative"
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Abrir menú"
+          aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
         >
-          <span className={`block h-0.5 w-7 bg-blue-700 rounded transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-          <span className={`block h-0.5 w-7 bg-blue-700 rounded transition-all duration-300 my-1 ${menuOpen ? 'opacity-0' : ''}`}></span>
-          <span className={`block h-0.5 w-7 bg-blue-700 rounded transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+          {/* Líneas del burger/X */}
+          <span
+            className={`absolute left-1/2 top-1/2 w-7 h-0.5 bg-blue-700 rounded transition-all duration-300
+              ${menuOpen ? 'rotate-45 -translate-x-1/2 -translate-y-1/2' : '-translate-x-1/2 -translate-y-2.5'}`}
+            style={{transitionProperty: 'transform, opacity, background'}}
+          ></span>
+          <span
+            className={`absolute left-1/2 top-1/2 w-7 h-0.5 bg-blue-700 rounded transition-all duration-300
+              ${menuOpen ? 'opacity-0' : '-translate-x-1/2 -translate-y-1/2'}`}
+            style={{transitionProperty: 'transform, opacity, background'}}
+          ></span>
+          <span
+            className={`absolute left-1/2 top-1/2 w-7 h-0.5 bg-blue-700 rounded transition-all duration-300
+              ${menuOpen ? '-rotate-45 -translate-x-1/2 -translate-y-1/2' : '-translate-x-1/2 translate-y-2.5'}`}
+            style={{transitionProperty: 'transform, opacity, background'}}
+          ></span>
         </button>
       </div>
       {/* Mobile nav */}
