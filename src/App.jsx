@@ -1,11 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Typewriter } from 'react-simple-typewriter';
+
 
 import Header from "./components/Header";
 import { FaRocket, FaMobileAlt, FaChartLine, FaUserShield } from "react-icons/fa";
 import ContactForm from "./components/ContactForm";
 import FadeInSection from "./components/FadeInSection";
 import SlideUpSection from "./components/SlideUpSection";
+import CarruselImagenes from "./components/CarruselImagenes";
 
 
 function App() {
@@ -100,6 +103,9 @@ function App() {
         </div>
       </FadeInSection>
 
+      {/* Carrusel de imágenes destacado */}
+      <CarruselImagenes />
+
       {/* Servicios Section moderna con imágenes y animación SlideUp */}
       <SlideUpSection id="servicios" className="py-20 bg-gradient-to-b from-gray-50 to-gray-200">
         <div className="container mx-auto px-4">
@@ -167,6 +173,7 @@ function App() {
               <li><a href="#sobre-mi" className="hover:text-blue-400 transition">Sobre mí</a></li>
               <li><a href="#servicios" className="hover:text-blue-400 transition">Servicios</a></li>
               <li><a href="#contacto" className="hover:text-blue-400 transition">Contacto</a></li>
+              <li><Link to="/recreo" className="hover:text-pink-500 transition font-bold">Recreo</Link></li>
             </ul>
           </nav>
 

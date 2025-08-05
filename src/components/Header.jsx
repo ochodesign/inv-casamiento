@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-
-function Header() {
+function Header({ currentPage }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
+  const isRecreoActive = typeof window !== 'undefined' && window.location.pathname === '/recreo';
+  const isInicioActive = typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '/#inicio');
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
       // Detectar sección activa
-      const sections = ["inicio", "sobremi", "servicios", "contacto"];
+      const sections = ["inicio", "sobremi", "servicios", "contacto", "recreo"];
       let found = "inicio";
       for (let id of sections) {
         const el = document.getElementById(id);
@@ -28,50 +30,84 @@ function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+
 
   return (
-    <header className={`w-full font-saira sticky top-0 z-30 transition-all duration-300 ${scrolled ? 'bg-white/80 backdrop-blur shadow-lg' : 'bg-white shadow'}`}>
-      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300
+      ${scrolled ? "bg-white shadow-md" : "bg-gradient-to-b from-gray-900/90 to-gray-800/80 backdrop-blur border-b border-gray-800/40"}
+    `}>
+      <div className={`max-w-6xl mx-auto px-4 py-3 flex items-center justify-between transition-colors duration-300
+        ${scrolled ? "" : "text-white"}
+      `}>
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2 font-bold text-2xl text-blue-700">
-          <svg className="w-8 h-8 text-blue-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="#e0e7ff" />
-            <text x="12" y="16" textAnchor="middle" fontSize="10" fill="#1d4ed8" fontFamily="Saira, sans-serif">LO</text>
-          </svg>
+        <a href="#inicio" className={`font-extrabold text-2xl tracking-tight transition-colors duration-300 ${scrolled ? "text-blue-700" : "text-white"}`}>
           Lucas Ochoa
         </a>
         {/* Desktop nav */}
-        <nav className="hidden md:flex gap-8 text-gray-700 font-medium">
+        <nav className={`hidden md:flex gap-8 text-lg font-medium transition-colors duration-300 ${scrolled ? "text-gray-700" : "text-white"}`}>
           {[
-            { id: "inicio", label: "Inicio" },
-            { id: "sobremi", label: "Sobre mí" },
-            { id: "servicios", label: "Servicios" },
-            { id: "contacto", label: "Contacto" },
-          ].map((item) => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              className={`relative px-1 transition duration-200 rounded scroll-smooth focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
-                hover:text-blue-700
-                ${activeSection === item.id ? 'font-extrabold text-blue-700' : ''}
-              `}
-            >
-              <span className="relative z-10">{item.label}</span>
-              <span
-                className={`absolute left-0 right-0 -bottom-1 h-0.5 rounded bg-blue-700 transition-all duration-300
-                  ${activeSection === item.id ? 'w-full scale-x-100 opacity-100' : 'w-0 scale-x-0 opacity-0'}
-                `}
-                style={{transitionProperty: 'width, opacity, transform'}}
-              />
-            </a>
-          ))}
+            { id: "inicio", label: "Inicio", type: "anchor" },
+            { id: "sobremi", label: "Sobre mí", type: "anchor" },
+            { id: "servicios", label: "Servicios", type: "anchor" },
+            { id: "contacto", label: "Contacto", type: "anchor" },
+            { id: "recreo", label: "Recreo", type: "route" }
+          ].map((item) => {
+            if (item.type === "route") {
+              return (
+                <Link
+                  key={item.id}
+                  to="/recreo"
+                  className={`relative px-1 transition duration-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 font-bold
+                    ${scrolled ? "hover:text-pink-600" : "hover:text-pink-300"}
+                    ${isRecreoActive ? 'font-extrabold text-pink-600' : (scrolled ? 'text-pink-600' : 'text-pink-200')}
+                  `}
+                >
+                  <span className="relative z-10">{item.label}</span>
+                  <span
+                    className={`absolute left-0 right-0 -bottom-1 h-0.5 rounded bg-pink-600 transition-all duration-300
+                      ${isRecreoActive ? 'w-full scale-x-100 opacity-100' : 'w-0 scale-x-0 opacity-0'}`}
+                    style={{transitionProperty: 'width, opacity, transform'}}
+                  />
+                </Link>
+              );
+            } else {
+              // Si estamos en /recreo, los anchors deben llevar a la home
+              const isOnRecreo = typeof window !== 'undefined' && window.location.pathname === '/recreo';
+              if (isOnRecreo) {
+                return (
+                  <Link
+                    key={item.id}
+                    to={`/#${item.id}`}
+                    className={`relative px-1 transition duration-200 rounded scroll-smooth focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
+                      ${scrolled ? "hover:text-blue-700" : "hover:text-blue-300"}
+                    `}
+                  >
+                    <span className="relative z-10">{item.label}</span>
+                  </Link>
+                );
+              } else {
+                return (
+                  <a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    className={`relative px-1 transition duration-200 rounded scroll-smooth focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
+                      ${scrolled ? "hover:text-blue-700" : "hover:text-blue-300"}
+                      ${item.id === "inicio" && isInicioActive ? 'font-extrabold text-blue-500' : ''}
+                      ${activeSection === item.id && item.id !== "inicio" ? (scrolled ? 'font-extrabold text-blue-700' : 'font-extrabold text-blue-300') : ''}
+                    `}
+                  >
+                    <span className="relative z-10">{item.label}</span>
+                    <span
+                      className={`absolute left-0 right-0 -bottom-1 h-0.5 rounded bg-blue-700 transition-all duration-300
+                        ${item.id === "inicio" && isInicioActive ? 'w-full scale-x-100 opacity-100' : ''}
+                        ${activeSection === item.id && item.id !== "inicio" ? 'w-full scale-x-100 opacity-100' : 'w-0 scale-x-0 opacity-0'}`}
+                      style={{transitionProperty: 'width, opacity, transform'}}
+                    />
+                  </a>
+                );
+              }
+            }
+          })}
         </nav>
         {/* Burger menu */}
         <button
@@ -102,28 +138,40 @@ function Header() {
         <nav className="md:hidden bg-white shadow-lg border-t border-gray-100 animate-fade-in-down">
           <ul className="flex flex-col items-center gap-6 py-6 text-lg font-medium">
             {[
-              { id: "inicio", label: "Inicio" },
-              { id: "sobremi", label: "Sobre mí" },
-              { id: "servicios", label: "Servicios" },
-              { id: "contacto", label: "Contacto" },
+              { id: "inicio", label: "Inicio", type: "anchor" },
+              { id: "sobremi", label: "Sobre mí", type: "anchor" },
+              { id: "servicios", label: "Servicios", type: "anchor" },
+              { id: "contacto", label: "Contacto", type: "anchor" },
+              { id: "recreo", label: "Recreo", type: "route" },
             ].map((item) => (
               <li key={item.id}>
-                <a
-                  href={`#${item.id}`}
-                  className={`relative px-1 transition duration-200 rounded scroll-smooth focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
-                    hover:text-blue-700
-                    ${activeSection === item.id ? 'font-extrabold text-blue-700' : ''}
-                  `}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  <span className="relative z-10">{item.label}</span>
-                  <span
-                    className={`absolute left-0 right-0 -bottom-1 h-0.5 rounded bg-blue-700 transition-all duration-300
-                      ${activeSection === item.id ? 'w-full scale-x-100 opacity-100' : 'w-0 scale-x-0 opacity-0'}
+                {item.type === "route" ? (
+                  <Link
+                    to="/recreo"
+                className={`relative px-1 transition duration-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 font-bold
+                  ${scrolled ? "hover:text-blue-700 text-pink-600" : "hover:text-pink-300 text-pink-200"}
+                `}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <span className="relative z-10">{item.label}</span>
+                  </Link>
+                ) : (
+                  <a
+                    href={`#${item.id}`}
+                    className={`relative px-1 transition duration-200 rounded scroll-smooth focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
+                      hover:text-blue-700
+                      ${activeSection === item.id ? 'font-extrabold text-blue-700' : ''}
                     `}
-                    style={{transitionProperty: 'width, opacity, transform'}}
-                  />
-                </a>
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <span className="relative z-10">{item.label}</span>
+                    <span
+                      className={`absolute left-0 right-0 -bottom-1 h-0.5 rounded bg-blue-700 transition-all duration-300
+                        ${activeSection === item.id ? 'w-full scale-x-100 opacity-100' : 'w-0 scale-x-0 opacity-0'}`}
+                      style={{transitionProperty: 'width, opacity, transform'}}
+                    />
+                  </a>
+                )}
               </li>
             ))}
           </ul>
