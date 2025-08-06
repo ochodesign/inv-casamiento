@@ -50,7 +50,8 @@ function Header({ currentPage }) {
             { id: "sobremi", label: "Sobre mí", type: "anchor" },
             { id: "servicios", label: "Servicios", type: "anchor" },
             { id: "contacto", label: "Contacto", type: "anchor" },
-            { id: "recreo", label: "Recreo", type: "route" }
+            { id: "componentes", label: "Componentes", type: "route" },
+            { id: "recreo", label: "Recreo", type: "route" }  
           ].map((item) => {
             if (item.type === "route") {
               return (
