@@ -50,23 +50,24 @@ function Header({ currentPage }) {
             { id: "sobremi", label: "Sobre mí", type: "anchor" },
             { id: "servicios", label: "Servicios", type: "anchor" },
             { id: "contacto", label: "Contacto", type: "anchor" },
-            { id: "componentes", label: "Componentes", type: "route" },
-            { id: "recreo", label: "Recreo", type: "route" }  
+            { id: "componentes", label: "Componentes", type: "route", to: "/componentes" },
+            { id: "recreo", label: "Recreo", type: "route", to: "/recreo" }
           ].map((item) => {
             if (item.type === "route") {
+              const isActive = typeof window !== 'undefined' && window.location.pathname === item.to;
               return (
                 <Link
                   key={item.id}
-                  to="/recreo"
+                  to={item.to}
                   className={`relative px-1 transition duration-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 font-bold
                     ${scrolled ? "hover:text-pink-600" : "hover:text-pink-300"}
-                    ${isRecreoActive ? 'font-extrabold text-pink-600' : (scrolled ? 'text-pink-600' : 'text-pink-200')}
+                    ${isActive ? 'font-extrabold text-pink-600' : (scrolled ? 'text-pink-600' : 'text-pink-200')}
                   `}
                 >
                   <span className="relative z-10">{item.label}</span>
                   <span
                     className={`absolute left-0 right-0 -bottom-1 h-0.5 rounded bg-pink-600 transition-all duration-300
-                      ${isRecreoActive ? 'w-full scale-x-100 opacity-100' : 'w-0 scale-x-0 opacity-0'}`}
+                      ${isActive ? 'w-full scale-x-100 opacity-100' : 'w-0 scale-x-0 opacity-0'}`}
                     style={{transitionProperty: 'width, opacity, transform'}}
                   />
                 </Link>
@@ -143,15 +144,17 @@ function Header({ currentPage }) {
               { id: "sobremi", label: "Sobre mí", type: "anchor" },
               { id: "servicios", label: "Servicios", type: "anchor" },
               { id: "contacto", label: "Contacto", type: "anchor" },
-              { id: "recreo", label: "Recreo", type: "route" },
+              { id: "componentes", label: "Componentes", type: "route", to: "/componentes" },
+              { id: "recreo", label: "Recreo", type: "route", to: "/recreo" }
             ].map((item) => (
               <li key={item.id}>
                 {item.type === "route" ? (
                   <Link
-                    to="/recreo"
-                className={`relative px-1 transition duration-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 font-bold
-                  ${scrolled ? "hover:text-blue-700 text-pink-600" : "hover:text-pink-300 text-pink-200"}
-                `}
+                    to={item.to}
+                    className={`relative px-1 transition duration-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 font-bold
+                      ${scrolled ? "hover:text-blue-700 text-pink-600" : "hover:text-pink-300 text-pink-200"}
+                      ${typeof window !== 'undefined' && window.location.pathname === item.to ? 'font-extrabold text-pink-600' : ''}
+                    `}
                     onClick={() => setMenuOpen(false)}
                   >
                     <span className="relative z-10">{item.label}</span>

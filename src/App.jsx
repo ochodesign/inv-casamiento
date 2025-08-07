@@ -4,6 +4,7 @@ import { Typewriter } from 'react-simple-typewriter';
 
 
 import Header from "./components/Header";
+import BtnFlotante from "./components/BtnFlotante";
 import BotonWhatsapp from "./components/BotonWhatsapp";
 import BotonAlFormulario from "./components/BotonAlFormulario";
 import { FaRocket, FaMobileAlt, FaChartLine, FaUserShield } from "react-icons/fa";
@@ -12,6 +13,7 @@ import FadeInSection from "./components/FadeInSection";
 import SlideUpSection from "./components/SlideUpSection";
 import CarruselImagenes from "./components/CarruselImagenes";
 import ComponentesPage from "./pages/Componentes";
+import Recreo from "./pages/Recreo";
 
 
 // Componente principal que contiene toda la página
@@ -167,22 +169,35 @@ function HomeContent() {
       <footer className="bg-gray-900 text-gray-200 py-10 mt-8">
         <div className="container mx-auto px-4 flex flex-col md:flex-row md:justify-between md:items-center gap-8">
           {/* Logo e info */}
-<div className="flex flex-col items-center md:items-start gap-2">
-  <div className="flex items-center gap-2 mb-2">
-    <img src="/logo192.png" alt="Logo" className="w-10 h-10 rounded-full" />
-    <span className="text-xl font-bold text-white">MiMarca</span>
-  </div>
-  <p className="text-gray-400 text-sm text-center md:text-left max-w-xs">Desarrollador web especializado en sitios profesionales, one page y landing pages. ¡Hablemos de tu próximo proyecto!</p>
-</div>
+          <div className="flex flex-col items-center md:items-start gap-2">
+            <div className="flex items-center gap-2 mb-2">
+              <img src="/logo192.png" alt="Logo" className="w-10 h-10 rounded-full" />
+              <span className="text-xl font-bold text-white">MiMarca</span>
+            </div>
+            <p className="text-gray-400 text-sm text-center md:text-left max-w-xs">Desarrollador web especializado en sitios profesionales, one page y landing pages. ¡Hablemos de tu próximo proyecto!</p>
+          </div>
 
-{/* Social Links */}
-<div className="flex items-center gap-3">
-  <a href="https://www.instagram.com/tuusuario" target="_blank" rel="noopener noreferrer" className="bg-pink-100 hover:bg-pink-200 rounded-full p-2 transition flex items-center justify-center" title="Instagram">
-    <img src="/img/social/instagram.svg" alt="Instagram" className="w-5 h-5" />
-  </a>
-</div>
+          {/* Social Links */}
+          <div className="flex items-center gap-3">
+            <a href="https://www.instagram.com/tuusuario" target="_blank" rel="noopener noreferrer" className="bg-pink-100 hover:bg-pink-200 rounded-full p-2 transition flex items-center justify-center" title="Instagram">
+              <img src="/img/social/instagram.svg" alt="Instagram" className="w-5 h-5" />
+            </a>
+          </div>
         </div>
       </footer>
+      {/* Botones flotantes: WhatsApp y Scroll Up */}
+      <BtnFlotante />
     </div>
   );
 }
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomeContent />} />
+      <Route path="/componentes" element={<ComponentesPage />} />
+      <Route path="/recreo" element={<Recreo />} />
+    </Routes>
+  );
+}
+export default App;
