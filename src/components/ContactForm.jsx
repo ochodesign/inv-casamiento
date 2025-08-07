@@ -4,24 +4,61 @@ function ContactForm() {
   const [form, setForm] = useState({ nombre: "", email: "", telefono: "", mensaje: "" });
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
+  // Honeypot para bots
+  const [honeypot, setHoneypot] = useState("");
+
+  // Sanitizar entradas para evitar XSS
+  const sanitize = (str) => {
+    return str.replace(/[<>]/g, "");
+  };
+
+  // Validación estricta de email
+  const validateEmail = (email) => {
+    return /^[\w-.]+@[\w-]+\.[a-zA-Z]{2,}$/.test(email);
+  };
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    let { name, value } = e.target;
+    // Limitar longitud de campos
+    if (name === "nombre") value = value.slice(0, 60);
+    if (name === "email") value = value.slice(0, 80);
+    if (name === "telefono") value = value.slice(0, 30);
+    if (name === "mensaje") value = value.slice(0, 1000);
+    setForm({ ...form, [name]: sanitize(value) });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus(null);
+
+    // Si el honeypot tiene contenido, es un bot
+    if (honeypot) {
+      setStatus({ type: "error", text: "Error de validación." });
+      return;
+    }
+
+    // Validación de email
+    if (!validateEmail(form.email)) {
+      setStatus({ type: "error", text: "Por favor ingresa un email válido." });
+      return;
+    }
+    // Validación de campos vacíos (nombre, mensaje)
+    if (!form.nombre.trim() || !form.mensaje.trim()) {
+      setStatus({ type: "error", text: "Completa todos los campos obligatorios." });
+      return;
+    }
+
     setLoading(true);
     try {
+      const bodyData = { ...form, hp: honeypot };
       const res = await fetch("/backend/contact.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(form).toString(),
+        body: new URLSearchParams(bodyData).toString(),
       });
       const data = await res.json();
       if (data.success) {
-        setStatus({ type: "success", text: data.message });
+        setStatus({ type: "success", text: data.message || "¡Mensaje enviado correctamente!" });
         setForm({ nombre: "", email: "", telefono: "", mensaje: "" });
       } else {
         setStatus({ type: "error", text: data.message || "Error al enviar el mensaje." });
@@ -38,14 +75,29 @@ function ContactForm() {
       <h2 className="text-3xl font-bold mb-2 text-gray-800 text-center">Contacto</h2>
       <p className="mb-6 text-gray-500 text-center">¿Listo para tu próximo proyecto? ¡Escríbeme o contáctame por redes!</p>
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Honeypot invisible para bots */}
+        <input
+          type="text"
+          name="hp"
+          value={honeypot}
+          onChange={e => setHoneypot(e.target.value)}
+          autoComplete="off"
+          tabIndex="-1"
+          style={{ display: 'none' }}
+        />
           <input name="nombre" value={form.nombre} onChange={handleChange} placeholder="Nombre" className="flex-1 w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
           <input name="email" value={form.email} onChange={handleChange} placeholder="Email" type="email" className="flex-1 w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
        
         <input name="telefono" value={form.telefono} onChange={handleChange} placeholder="Teléfono (opcional)" type="tel" className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
         <textarea name="mensaje" value={form.mensaje} onChange={handleChange} placeholder="Mensaje" className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none min-h-[120px]" required />
         <button type="submit" disabled={loading} className={`w-full bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition ${loading ? 'opacity-60 cursor-not-allowed' : 'hover:bg-blue-800'}`}>{loading ? 'Enviando...' : 'Enviar mensaje'}</button>
-        {status && (
-          <p className={`mt-2 text-center font-medium ${status.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>{status.text}</p>
+        {status && status.type === 'success' && (
+          <div className="mt-4 text-center text-green-700 bg-green-100 border border-green-300 rounded-lg px-4 py-3 font-semibold animate-fade-in">
+            {status.text}
+          </div>
+        )}
+        {status && status.type === 'error' && (
+          <p className="mt-2 text-center font-medium text-red-600">{status.text}</p>
         )}
       </form>
       <div className="mt-8 flex flex-col items-center gap-2">

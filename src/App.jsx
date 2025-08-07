@@ -1,20 +1,19 @@
-import React from "react";
-import { Link, BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Typewriter } from 'react-simple-typewriter';
-
-
+import React, { Suspense, lazy } from "react";
+import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
+import FadeInSection from "./components/FadeInSection";
+import { Typewriter } from 'react-simple-typewriter';
 import BtnFlotante from "./components/BtnFlotante";
 import BotonWhatsapp from "./components/BotonWhatsapp";
 import BotonAlFormulario from "./components/BotonAlFormulario";
 import { FaRocket, FaMobileAlt, FaChartLine, FaUserShield } from "react-icons/fa";
 import ContactForm from "./components/ContactForm";
-import FadeInSection from "./components/FadeInSection";
 import SlideUpSection from "./components/SlideUpSection";
 import CarruselImagenes from "./components/CarruselImagenes";
-import ComponentesPage from "./pages/Componentes";
-import Recreo from "./pages/Recreo";
-
+import AdminLogin from "./components/AdminLogin";
+// ...otros imports...
+const ComponentesPage = lazy(() => import("./pages/Componentes"));
+const Recreo = lazy(() => import("./pages/Recreo"));
 
 // Componente principal que contiene toda la página
 function HomeContent() {
@@ -193,11 +192,14 @@ function HomeContent() {
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<HomeContent />} />
-      <Route path="/componentes" element={<ComponentesPage />} />
-      <Route path="/recreo" element={<Recreo />} />
-    </Routes>
+    <Suspense fallback={<div className="w-full h-screen flex items-center justify-center text-xl">Cargando...</div>}>
+      <Routes>
+        <Route path="/" element={<HomeContent />} />
+        <Route path="/componentes" element={<ComponentesPage />} />
+        <Route path="/recreo" element={<Recreo />} />
+        <Route path="/admin" element={<AdminLogin />} />
+      </Routes>
+    </Suspense>
   );
 }
 export default App;
