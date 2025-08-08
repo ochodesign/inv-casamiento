@@ -12,7 +12,7 @@ function BotonWhatsapp({ telefono = "5491123456789", mensaje = "¡Hola! Quiero m
       title="Contactar por WhatsApp"
     >
       <span role="img" aria-label="WhatsApp"></span>
-      Soy Un Btn WhatsApp
+  {/* Botón WhatsApp eliminado */}
     </a>
   );
 }

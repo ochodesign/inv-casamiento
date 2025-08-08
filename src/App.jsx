@@ -4,151 +4,175 @@ import Header from "./components/Header";
 import FadeInSection from "./components/FadeInSection";
 import { Typewriter } from 'react-simple-typewriter';
 import BtnFlotante from "./components/BtnFlotante";
-import BotonWhatsapp from "./components/BotonWhatsapp";
-import BotonAlFormulario from "./components/BotonAlFormulario";
-import { FaRocket, FaMobileAlt, FaChartLine, FaUserShield } from "react-icons/fa";
+// importaciones de botones eliminadas
+import { FaCameraRetro, FaEdit, FaCloudDownloadAlt } from "react-icons/fa";
 import ContactForm from "./components/ContactForm";
 import SlideUpSection from "./components/SlideUpSection";
 import CarruselImagenes from "./components/CarruselImagenes";
 import AdminLogin from "./components/AdminLogin";
 // ...otros imports...
-const ComponentesPage = lazy(() => import("./pages/Componentes"));
-const Recreo = lazy(() => import("./pages/Recreo"));
+// Eliminados ComponentesPage y Recreo
 
 // Componente principal que contiene toda la página
 function HomeContent() {
   return (
-    <div className="font-sans bg-gray-100 min-h-screen">
+  <div className="font-sans bg-base-light min-h-screen">
       <Header />
 
-      {/* Hero Section tipo Showcase */}
-      <FadeInSection id="inicio" className="pt-24 min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-900 to-gray-700 px-4 text-white relative overflow-hidden">
-        {/* Fondo mobile solo visible en mobile */}
-        <div className="absolute inset-0 w-full h-full block md:hidden z-0">
+      {/* Hero Fotografía de Eventos */}
+  <FadeInSection id="inicio" className="pt-24 min-h-screen flex flex-col justify-center items-center px-4 text-contrast relative overflow-hidden shadow-lg">
+        {/* Fondo hero personalizado */}
+        <div className="absolute inset-0 w-full h-full z-0">
           <img 
-            src="/img/bg-hero/bg-para-mb.webp" 
-            alt="Fondo Hero Mobile" 
-            className="w-full h-full object-cover object-top" 
+            src="/img/bg-hero/camara-profesional-en-un-borroso.jpg" 
+            alt="Cámara profesional desenfocada" 
+            className="w-full h-full object-cover object-center" 
             draggable="false"
           />
-          {/* Overlay oscuro para mejorar contraste */}
           <div className="absolute inset-0 bg-black/60" />
         </div>
-        {/* Fondo desktop solo visible en md+ */}
-        <div className="absolute inset-0 w-full h-full hidden md:block z-0">
-          <img 
-            src="/img/bg-hero/bg-para-dk.webp" 
-            alt="Fondo Hero Desktop" 
-            className="w-full h-full object-cover object-top" 
-            draggable="false"
-          />
-          {/* Overlay oscuro para mejorar contraste */}
-          <div className="absolute inset-0 bg-black/50" />
-        </div>
-        <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
-          {/* Izquierda: Texto animado */}
-          <div className="flex-1 flex flex-col items-start md:items-start text-left mb-10 md:mb-0">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              <span className="block">Bienvenido a tu</span>
-              <span className="text-blue-400">
-                <Typewriter
-                  words={["One Page", "Landing Page", "Sitio Profesional", "Portfolio Moderno"]}
-                  loop={0}
-                  cursor
-                  cursorStyle="_"
-                  typeSpeed={70}
-                  deleteSpeed={50}
-                  delaySpeed={1200}
-                />
-              </span>
-            </h1>
-            <p className="text-lg md:text-2xl mb-8 text-gray-200 max-w-md">Sitio profesional, moderno y responsivo, pensado para destacar tu marca o servicio.</p>
-            <a href="#contacto" className="px-6 py-3 bg-white text-gray-900 rounded-lg shadow hover:bg-gray-200 transition font-semibold">Contáctame</a>
-          </div>
-          {/* Derecha: Grid animado de servicios */}
-          <div className="flex-1 grid grid-cols-2 gap-4 animate-fade-in-up mb-10">
-            {/* Lanzamiento Rápido */}
-            <div className="bg-white/10 rounded-xl p-6 flex flex-col items-center shadow-lg border border-white/20 hover:scale-105 transition-transform">
-              <FaRocket className="w-10 h-10 mb-2 text-pink-400" />
-              <span className="font-semibold mb-1">Lanzamiento Rápido</span>
-              <span className="text-xs text-gray-200 text-center">Tu web lista en tiempo récord, sin perder calidad ni diseño.</span>
-            </div>
-            {/* Experiencia Mobile */}
-            <div className="bg-white/10 rounded-xl p-6 flex flex-col items-center shadow-lg border border-white/20 hover:scale-105 transition-transform">
-              <FaMobileAlt className="w-10 h-10 mb-2 text-blue-400" />
-              <span className="font-semibold mb-1">Experiencia Mobile</span>
-              <span className="text-xs text-gray-200 text-center">Sitios 100% adaptados a celulares y tablets, siempre rápidos.</span>
-            </div>
-            {/* Resultados Medibles */}
-            <div className="bg-white/10 rounded-xl p-6 flex flex-col items-center shadow-lg border border-white/20 hover:scale-105 transition-transform">
-              <FaChartLine className="w-10 h-10 mb-2 text-yellow-400" />
-              <span className="font-semibold mb-1">Resultados Medibles</span>
-              <span className="text-xs text-gray-200 text-center">Seguimiento de visitas, contactos y conversiones en tiempo real.</span>
-            </div>
-            {/* Seguridad y Soporte */}
-            <div className="bg-white/10 rounded-xl p-6 flex flex-col items-center shadow-lg border border-white/20 hover:scale-105 transition-transform">
-              <FaUserShield className="w-10 h-10 mb-2 text-green-400" />
-              <span className="font-semibold mb-1">Seguridad & Soporte</span>
-              <span className="text-xs text-gray-200 text-center">Tu web protegida y con soporte personalizado siempre disponible.</span>
-            </div>
-          </div>
+        <div className="w-full max-w-3xl flex flex-col items-center justify-center gap-8 relative z-10 py-20 bg-base/80 rounded-2xl shadow-2xl border-4 border-primary-light backdrop-blur-md">
+          <h1 className="uppercase text-5xl md:text-7xl font-black tracking-widest mb-4 text-contrast drop-shadow-xl text-center font-saira">
+            Karina Ochoa
+          </h1>
+          <h2 className="uppercase text-xl md:text-3xl font-bold tracking-wider mb-6 text-accent text-center">
+            Fotografía Profesional de Eventos
+          </h2>
+          <p className="text-lg md:text-2xl mb-8 text-contrast font-semibold text-center max-w-xl mx-auto drop-shadow">
+            Cumpleaños · Casamientos · 15 años · Fiestas · Bautismos · Colegios<br/>
+            <span className="block mt-2 text-base md:text-lg font-normal text-primary-light tracking-widest uppercase">Capturando emociones y momentos únicos</span>
+          </p>
+          <a href="#contacto" className="inline-block bg-accent hover:bg-primary text-base font-bold px-8 py-4 rounded-full shadow-xl text-lg tracking-widest uppercase transition-all duration-200">
+            Reservá tu fecha
+          </a>
         </div>
       </FadeInSection>
 
-      {/* Sobre mí Section */}
-      <FadeInSection id="sobremi" className="py-16 bg-gray-200">
+      {/* Sobre mí Fotógrafa */}
+  <FadeInSection id="sobremi" className="py-16 bg-primary-light">
         <div className="container mx-auto px-4 max-w-3xl flex flex-col md:flex-row items-center gap-8">
-          <img src="/logo192.png" alt="Foto Lucas Ochoa" className="w-32 h-32 rounded-full shadow-lg mx-auto md:mx-0" />
+          <img src="/img/karina-ochoa-perfil.webp" alt="Foto Karina Ochoa" className="w-32 h-32 rounded-full shadow-lg mx-auto md:mx-0 border-4 border-primary" />
           <div>
-            <h2 className="text-3xl font-bold text-center md:text-left mb-6 text-gray-800">Sobre mí</h2>
-            <p className="text-gray-700 text-lg text-center md:text-left">
-              Soy Lucas Ochoa, desarrollador web especializado en sitios profesionales, one page y landing pages. Me apasiona crear experiencias digitales modernas, responsivas y optimizadas para cada cliente. Trabajo con tecnologías actuales como React, Tailwind CSS y soluciones backend eficientes. ¡Hablemos de tu próximo proyecto!
+            <h2 className="text-3xl font-bold text-center md:text-left mb-6 text-primary">Sobre mí</h2>
+            <p className="text-base text-lg text-center md:text-left">
+              Soy Karina Ochoa, fotógrafa profesional especializada en capturar los momentos más importantes de tu vida. Mi misión es inmortalizar emociones y detalles en cumpleaños, casamientos, 15 años, fiestas, bautismos, eventos escolares y mucho más.<br/><br/>
+              Con años de experiencia y un enfoque artístico, te ofrezco imágenes auténticas, naturales y llenas de vida. ¡Hablemos y hacé que tus recuerdos sean eternos!
             </p>
           </div>
         </div>
       </FadeInSection>
 
       {/* Botones destacados: WhatsApp y Formulario */}
-      <div className="flex justify-center gap-4 py-8 bg-white">
-        <BotonWhatsapp telefono="5491112345678" mensaje="¡Hola! Vi tu web y quiero más info." />
-        <BotonAlFormulario />
+  <div className="flex justify-center gap-4 py-8 bg-base-light">
+  {/* Botones eliminados */}
       </div>
 
       {/* Carrusel de imágenes destacado */}
-      <CarruselImagenes />
+  <div className="py-12 bg-base">
+        <CarruselImagenes />
+      </div>
 
       {/* Servicios Section moderna con imágenes y animación SlideUp */}
-      <SlideUpSection id="servicios" className="py-20 bg-gradient-to-b from-gray-50 to-gray-200">
+      <SlideUpSection id="servicios" className="py-20 bg-gradient-to-b from-primary-light to-base-light">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800 tracking-tight">Servicios</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {/* Servicio 1 */}
-            <div className="group bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center hover:shadow-2xl transition-all border border-gray-100 hover:-translate-y-2">
-              <div className="w-24 h-24 mb-4 rounded-full overflow-hidden shadow-lg border-4 border-blue-100 group-hover:border-blue-300 transition-all">
-                <img src="/img/servicios/diseno-web.webp" alt="Diseño Web" className="w-full h-full object-cover" loading="lazy" />
+          <h2 className="text-3xl md:text-4xl font-black text-center mb-12 text-primary tracking-widest uppercase">Eventos que Capturo</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+            {/* Casamientos */}
+            <div className="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all border border-gray-100 hover:-translate-y-2 cursor-pointer">
+              <div className="w-full h-48 overflow-hidden">
+                <img src="/img/servicios/casamiento-1.jpg" alt="Casamiento" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-900">Diseño Web Moderno</h3>
-              <p className="text-gray-600 text-center text-sm">Sitios visualmente atractivos, responsivos y optimizados para tu marca o negocio.</p>
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-bold mb-2 uppercase tracking-wide text-primary">Casamientos</h3>
+                <p className="text-gray-600 text-sm">Momentos únicos, emociones y detalles de tu boda, capturados para siempre.</p>
+              </div>
             </div>
-            {/* Servicio 2 */}
-            <div className="group bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center hover:shadow-2xl transition-all border border-gray-100 hover:-translate-y-2">
-              <div className="w-24 h-24 mb-4 rounded-full overflow-hidden shadow-lg border-4 border-pink-100 group-hover:border-pink-300 transition-all">
-                <img src="/img/servicios/landing-page.webp" alt="Landing Pages" className="w-full h-full object-cover" loading="lazy" />
+            {/* Bautismos */}
+            <div className="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all border border-gray-100 hover:-translate-y-2 cursor-pointer">
+              <div className="w-full h-48 overflow-hidden">
+                <img src="/img/servicios/comunion.jpg" alt="Bautismo" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-900">Landing Pages</h3>
-              <p className="text-gray-600 text-center text-sm">Páginas de alto impacto para captar clientes, leads y aumentar conversiones.</p>
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-bold mb-2 uppercase tracking-wide text-primary">Bautismos</h3>
+                <p className="text-gray-600 text-sm">La ternura y la fe en imágenes delicadas y llenas de luz.</p>
+              </div>
             </div>
-            {/* Servicio 3 */}
-            <div className="group bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center hover:shadow-2xl transition-all border border-gray-100 hover:-translate-y-2">
-              <div className="w-24 h-24 mb-4 rounded-full overflow-hidden shadow-lg border-4 border-green-100 group-hover:border-green-300 transition-all">
-                <img src="/img/servicios/soporte-seo.webp" alt="Soporte y Optimización" className="w-full h-full object-cover" loading="lazy" />
+            {/* 15 años */}
+            <div className="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all border border-gray-100 hover:-translate-y-2 cursor-pointer">
+              <div className="w-full h-48 overflow-hidden">
+                <img src="/img/servicios/cumple-15.jpg" alt="15 años" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-900">Soporte & SEO</h3>
-              <p className="text-gray-600 text-center text-sm">Mantenimiento, mejoras continuas y optimización SEO para crecer online.</p>
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-bold mb-2 uppercase tracking-wide text-primary">15 años</h3>
+                <p className="text-gray-600 text-sm">Sueños, alegría y juventud en una noche inolvidable.</p>
+              </div>
+            </div>
+            {/* Egresados */}
+            <div className="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all border border-gray-100 hover:-translate-y-2 cursor-pointer">
+              <div className="w-full h-48 overflow-hidden">
+                <img src="/img/servicios/egresados-jardin.jpg" alt="Egresados" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+              </div>
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-bold mb-2 uppercase tracking-wide text-primary">Egresados</h3>
+                <p className="text-gray-600 text-sm">Celebrá el cierre de una etapa con fotos llenas de energía y amistad.</p>
+              </div>
+            </div>
+            {/* Cumpleaños */}
+            <div className="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all border border-gray-100 hover:-translate-y-2 cursor-pointer">
+              <div className="w-full h-48 overflow-hidden">
+                <img src="/img/servicios/cumple-15.jpg" alt="Cumpleaños" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+              </div>
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-bold mb-2 uppercase tracking-wide text-primary">Cumpleaños</h3>
+                <p className="text-gray-600 text-sm">Diversión, familia y amigos en imágenes llenas de color y vida.</p>
+              </div>
+            </div>
+            {/* Fiestas y otros eventos */}
+            <div className="group relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all border border-gray-100 hover:-translate-y-2 cursor-pointer">
+              <div className="w-full h-48 overflow-hidden">
+                <img src="/img/servicios/casamiento-1.jpg" alt="Fiestas y otros eventos" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+              </div>
+              <div className="p-6 text-center">
+                <h3 className="text-xl font-bold mb-2 uppercase tracking-wide text-primary">Fiestas & Más</h3>
+                <p className="text-gray-600 text-sm">Cualquier evento especial merece ser recordado con fotos profesionales.</p>
+              </div>
             </div>
           </div>
         </div>
       </SlideUpSection>
+
+      {/* Sección Cómo trabajo */}
+      <FadeInSection id="metodologia" className="py-20 bg-base-light">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <h2 className="text-3xl md:text-4xl font-black text-center mb-12 text-primary tracking-widest uppercase">Cómo trabajo</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {/* Paso 1: Captura profesional */}
+            <div className="flex flex-col items-center bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+              <span className="mb-4 text-primary">
+                <FaCameraRetro size={48} />
+              </span>
+              <h3 className="text-xl font-bold mb-2 text-primary uppercase tracking-wide">Captura profesional</h3>
+              <p className="text-gray-700 text-center text-sm">Utilizo cámaras y lentes de alta gama para lograr imágenes nítidas, creativas y llenas de emoción en cada evento.</p>
+            </div>
+            {/* Paso 2: Edición y retoque */}
+            <div className="flex flex-col items-center bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+              <span className="mb-4 text-primary">
+                <FaEdit size={48} />
+              </span>
+              <h3 className="text-xl font-bold mb-2 text-primary uppercase tracking-wide">Edición profesional</h3>
+              <p className="text-gray-700 text-center text-sm">Cada foto es seleccionada y editada cuidadosamente con software especializado para resaltar lo mejor de cada momento.</p>
+            </div>
+            {/* Paso 3: Entrega personalizada */}
+            <div className="flex flex-col items-center bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+              <span className="mb-4 text-primary">
+                <FaCloudDownloadAlt size={48} />
+              </span>
+              <h3 className="text-xl font-bold mb-2 text-primary uppercase tracking-wide">Entrega personalizada</h3>
+              <p className="text-gray-700 text-center text-sm">Recibís tus fotos en alta calidad, listas para compartir o imprimir, en formato digital y con opciones de álbum profesional.</p>
+            </div>
+          </div>
+        </div>
+      </FadeInSection>
 
       {/* Contadores animados de logros */}
       <React.Suspense fallback={null}>
@@ -156,7 +180,7 @@ function HomeContent() {
       </React.Suspense>
 
       {/* Contacto Section angosta y vertical */}
-      <FadeInSection id="contacto" className="py-16 bg-gradient-to-t from-gray-700 to-gray-100">
+  <FadeInSection id="contacto" className="py-16 bg-gradient-to-t from-base to-primary-light">
         <div className="container mx-auto px-4 flex justify-center">
           <div className="w-full max-w-md">
             <ContactForm />
@@ -165,20 +189,20 @@ function HomeContent() {
       </FadeInSection>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-200 py-10 mt-8">
+  <footer className="bg-base text-contrast py-10 mt-8">
         <div className="container mx-auto px-4 flex flex-col md:flex-row md:justify-between md:items-center gap-8">
           {/* Logo e info */}
           <div className="flex flex-col items-center md:items-start gap-2">
             <div className="flex items-center gap-2 mb-2">
-              <img src="/logo192.png" alt="Logo" className="w-10 h-10 rounded-full" />
-              <span className="text-xl font-bold text-white">MiMarca</span>
+              <img src="/img/karina-ochoa-perfil.webp" alt="Logo" className="w-10 h-10 rounded-full border-2 border-primary" />
+              <span className="text-xl font-bold text-primary-light">Karina Ochoa</span>
             </div>
-            <p className="text-gray-400 text-sm text-center md:text-left max-w-xs">Desarrollador web especializado en sitios profesionales, one page y landing pages. ¡Hablemos de tu próximo proyecto!</p>
+            <p className="text-base-light text-sm text-center md:text-left max-w-xs">Fotografía profesional de eventos sociales y familiares. ¡Consultá por tu fecha!</p>
           </div>
 
           {/* Social Links */}
           <div className="flex items-center gap-3">
-            <a href="https://www.instagram.com/tuusuario" target="_blank" rel="noopener noreferrer" className="bg-pink-100 hover:bg-pink-200 rounded-full p-2 transition flex items-center justify-center" title="Instagram">
+            <a href="https://www.instagram.com/tuusuario" target="_blank" rel="noopener noreferrer" className="bg-accent hover:bg-primary rounded-full p-2 transition flex items-center justify-center" title="Instagram">
               <img src="/img/social/instagram.svg" alt="Instagram" className="w-5 h-5" />
             </a>
           </div>
@@ -195,8 +219,7 @@ function App() {
     <Suspense fallback={<div className="w-full h-screen flex items-center justify-center text-xl">Cargando...</div>}>
       <Routes>
         <Route path="/" element={<HomeContent />} />
-        <Route path="/componentes" element={<ComponentesPage />} />
-        <Route path="/recreo" element={<Recreo />} />
+  {/* Rutas eliminadas */}
         <Route path="/admin" element={<AdminLogin />} />
       </Routes>
     </Suspense>
