@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import Modal from "./Modal";
 
 const images = [
   "/img/galeria/galeria1.webp",
@@ -10,9 +11,12 @@ const images = [
 
 function CarruselImagenes() {
   const [current, setCurrent] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
   const timeoutRef = useRef();
   const touchStartX = useRef(null);
   const touchEndX = useRef(null);
+  const modalTouchStartX = useRef(null);
+  const modalTouchEndX = useRef(null);
 
   useEffect(() => {
     timeoutRef.current = setTimeout(() => {
@@ -20,6 +24,18 @@ function CarruselImagenes() {
     }, 3500);
     return () => clearTimeout(timeoutRef.current);
   }, [current]);
+
+  // Soporte de teclado global para modal
+  useEffect(() => {
+    if (!modalOpen) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setModalOpen(false);
+      if (e.key === 'ArrowLeft') setCurrent((prev) => (prev - 1 + images.length) % images.length);
+      if (e.key === 'ArrowRight') setCurrent((prev) => (prev + 1) % images.length);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [modalOpen, images.length]);
 
   const goTo = (idx) => setCurrent(idx);
 
@@ -53,10 +69,12 @@ function CarruselImagenes() {
         <h2 className="text-4xl md:text-5xl font-black text-center mb-14 text-primary tracking-widest uppercase drop-shadow-lg">Galería de Trabajos</h2>
         <div className="relative max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-2xl border-4 border-primary-light">
           <div
-            className="aspect-[21/9] bg-gray-200 flex items-center justify-center select-none"
+            className="aspect-[4/3] md:aspect-[21/9] bg-gray-200 flex items-center justify-center select-none cursor-zoom-in"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
+            onClick={() => setModalOpen(true)}
+            title="Ampliar imagen"
           >
             <img
               src={images[current]}
@@ -98,6 +116,73 @@ function CarruselImagenes() {
             ))}
           </div>
         </div>
+        {/* Modal de imagen ampliada */}
+        <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+          <div
+            className="fixed inset-0 flex items-center justify-center z-50"
+            onClick={e => {
+              // Solo cerrar si el click es en el fondo, no en la imagen ni en los controles
+              if (e.target === e.currentTarget) setModalOpen(false);
+            }}
+          >
+            <div
+              className="relative flex items-center justify-center bg-black rounded-2xl overflow-hidden"
+              style={{ minHeight: '60vw', minWidth: '60vw', maxHeight: '80vh' }}
+              onTouchStart={e => (modalTouchStartX.current = e.touches[0].clientX)}
+              onTouchMove={e => (modalTouchEndX.current = e.touches[0].clientX)}
+              onTouchEnd={() => {
+                if (modalTouchStartX.current !== null && modalTouchEndX.current !== null) {
+                  const diff = modalTouchStartX.current - modalTouchEndX.current;
+                  if (Math.abs(diff) > 50) {
+                    if (diff > 0) {
+                      setCurrent((prev) => (prev + 1) % images.length);
+                    } else {
+                      setCurrent((prev) => (prev - 1 + images.length) % images.length);
+                    }
+                  }
+                }
+                modalTouchStartX.current = null;
+                modalTouchEndX.current = null;
+              }}
+              onClick={e => e.stopPropagation()}
+            >
+              {/* Botón de cerrar absolutamente posicionado sobre la imagen, siempre visible */}
+              <button
+                className="absolute top-2 right-2 md:top-4 md:right-4 text-white text-3xl font-bold bg-black/70 rounded-full px-3 py-1 md:px-4 md:py-2 hover:bg-black/90 transition z-50 shadow-lg focus:outline-none"
+                style={{ minWidth: 40 }}
+                onClick={() => setModalOpen(false)}
+                aria-label="Cerrar"
+              >
+                ×
+              </button>
+              {/* Botón de cerrar removido, ahora solo en Modal.jsx */}
+              {/* Flecha izquierda */}
+              <button
+                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white text-3xl rounded-full p-2 z-20"
+                onClick={() => setCurrent((prev) => (prev - 1 + images.length) % images.length)}
+                aria-label="Anterior"
+                style={{ minWidth: 40 }}
+              >
+                &#8592;
+              </button>
+              <img
+                src={images[current]}
+                alt={`Imagen ampliada ${current + 1}`}
+                className="max-h-[80vh] max-w-full w-auto h-auto object-contain mx-auto select-none bg-black"
+                draggable="false"
+              />
+              {/* Flecha derecha */}
+              <button
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white text-3xl rounded-full p-2 z-20"
+                onClick={() => setCurrent((prev) => (prev + 1) % images.length)}
+                aria-label="Siguiente"
+                style={{ minWidth: 40 }}
+              >
+                &#8594;
+              </button>
+            </div>
+          </div>
+        </Modal>
       </div>
     </section>
   );
