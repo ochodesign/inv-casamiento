@@ -8,11 +8,11 @@ const Hero = () => {
     >
       <style>{`
         .hero-bg-responsive {
-          background-image: url('/img/bg-hero/bg-1.jpg');
+          background-image: url('/img/bg-hero/bgherodk.webp');
         }
         @media (max-width: 639px) {
           .hero-bg-responsive {
-            background-image: url('/img/bg-hero/bg-2-mb.webp') !important;
+            background-image: url('/img/bg-hero/bgheromb.webp') !important;
           }
         }
       `}</style>
@@ -40,7 +40,7 @@ const Hero = () => {
           style={{wordBreak:'break-word', lineHeight:'1.1'}}
         >
           Karina
-          <span className="text-[#bfa16a] text-4xl xs:text-5xl sm:text-6xl md:text-8xl font-serif mx-2">&</span>
+          <span className="text-accent text-4xl xs:text-5xl sm:text-6xl md:text-8xl font-serif mx-2">&</span>
           Sergio
         </h1>
         {/* Frase de amor */}

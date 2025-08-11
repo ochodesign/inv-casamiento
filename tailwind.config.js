@@ -10,11 +10,12 @@ module.exports = {
       },
       colors: {
         primary: {
-          DEFAULT: '#b83260', // Rosa oscuro elegante
-          light: '#f8e1ec',   // Rosa claro
+          DEFAULT: '#5A0B0B', // Rojo pasión/bordó
+          light: '#B22222',   // Rojo fuego
+          dark: '#5A0B0B',    // Bordó profundo
         },
         accent: {
-          DEFAULT: '#fbbf24', // Amarillo dorado
+          DEFAULT: '#FFD700', // Dorado
         },
         base: {
           DEFAULT: '#18181b', // Gris oscuro casi negro

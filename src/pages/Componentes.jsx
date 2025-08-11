@@ -1,12 +1,10 @@
 import React from "react";
-import Header from "../components/Header";
-// importaciones de botones eliminadas
 // Puedes importar más componentes reutilizables aquí
 import Footer from "../components/Footer";
 
 const Componentes = () => (
   <div>
-    <Header />
+  {/* <Header /> eliminado porque el componente ya no existe */}
     <main>
       {/* Botón al Formulario */}
       <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center gap-4">
