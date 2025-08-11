@@ -31,22 +31,13 @@ const Hero = () => {
         {/* Fecha con líneas */}
         <div className="flex items-center justify-center w-full mb-6">
           <span className="hidden sm:block flex-1 h-px bg-white/40 mr-4"></span>
-          <span className="text-white text-lg font-semibold tracking-widest px-2">20.12.2025</span>
+          <AnimatedHeroText tag="span" className="text-white text-lg font-semibold tracking-widest px-2" text="20.12.2025" />
           <span className="hidden sm:block flex-1 h-px bg-white/40 ml-4"></span>
         </div>
-        {/* Nombres */}
-        <h1
-          className="text-3xl xs:text-4xl sm:text-5xl md:text-7xl font-lora font-bold text-white mb-2 drop-shadow-lg flex flex-row items-center gap-2 sm:gap-4 flex-wrap justify-center w-full max-w-full break-words"
-          style={{wordBreak:'break-word', lineHeight:'1.1'}}
-        >
-          Karina
-          <span className="text-accent text-4xl xs:text-5xl sm:text-6xl md:text-8xl font-serif mx-2">&</span>
-          Sergio
-        </h1>
+        {/* Nombres con animación */}
+        <AnimatedHeroText />
         {/* Frase de amor */}
-        <p className="text-white text-lg md:text-2xl font-lora font-light italic mt-6 mb-8 max-w-2xl drop-shadow">
-          “El amor no mira con los ojos, sino con el alma.”
-        </p>
+        <AnimatedHeroText tag="p" className="text-white text-lg md:text-2xl font-lora font-light italic mt-6 mb-8 max-w-2xl drop-shadow" text="“El amor no mira con los ojos, sino con el alma.”" />
         {/* Flecha scroll animada */}
         <a href="#evento" className="mt-4 animate-bounce">
           <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="2">
@@ -57,5 +48,37 @@ const Hero = () => {
     </section>
   );
 };
+
+// Animación de fade-in y slide-up para el texto del Hero
+function AnimatedHeroText({ tag = "h1", className = "", text = null }) {
+  const [show, setShow] = React.useState(false);
+  React.useEffect(() => {
+    const t = setTimeout(() => setShow(true), 200);
+    return () => clearTimeout(t);
+  }, []);
+  const baseClass =
+    "transition-all duration-1000 ease-out " +
+    (show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8");
+  if (!text) {
+    // Nombres por defecto
+    return (
+      <h1
+        className={
+          `text-3xl xs:text-4xl sm:text-5xl md:text-7xl font-lora font-bold text-white mb-2 drop-shadow-lg flex flex-row items-center gap-2 sm:gap-4 flex-wrap justify-center w-full max-w-full break-words ${baseClass}` +
+          (className ? ` ${className}` : "")
+        }
+        style={{ wordBreak: "break-word", lineHeight: "1.1" }}
+      >
+        Karina
+        <span className="text-accent text-4xl xs:text-5xl sm:text-6xl md:text-8xl font-serif mx-2">&</span>
+        Sergio
+      </h1>
+    );
+  }
+  const Tag = tag;
+  return (
+    <Tag className={className + " " + baseClass}>{text}</Tag>
+  );
+}
 
 export default Hero;
