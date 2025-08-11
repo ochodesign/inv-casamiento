@@ -6,7 +6,6 @@ const InfoEvento = () => {
   return (
   <section className="relative w-full py-10 px-2 sm:px-4 bg-white flex flex-col items-center overflow-x-hidden">
       <div className="flex flex-col items-center mb-8">
-        <RingsSVG />
   <h2 className="text-2xl md:text-3xl font-lora font-bold text-primary mt-2">Información del Evento</h2>
       </div>
 
